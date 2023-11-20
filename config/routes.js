@@ -1,15 +1,20 @@
 const {
-    getDataAll,
-    getDataById,
-    insertProduct,
-    updateProduct,
-    deleteProduct,
-} = require('../controller/handler');
+    getUsers,
+    getUserById,
+    insertUser,
+    updateDataUser,
+    deleteUser,
+} = require('../controller/Users');
+
+const { authLogin } = require('../controller/Auth')
+const { verifyUser } = require('./middleware')
 
 module.exports = (app) => {
-  app.get('/products', getDataAll);
-  app.get('/product/:id', getDataById);
-  app.post('/product/add', insertProduct);
-  app.put('/product/update/:id', updateProduct);
-  app.delete('/product/delete/:id', deleteProduct);
+  app.get('/users', verifyUser, getUsers);
+  app.get('/user/:id', getUserById);
+  app.post('/user/add', insertUser);
+  app.put('/user/update/:id', updateDataUser);
+  app.delete('/user/delete/:id', deleteUser);
+
+  app.post('/login', authLogin)
 };
