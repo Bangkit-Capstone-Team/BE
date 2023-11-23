@@ -37,6 +37,4 @@ const model = db.define('users',
   { freezeTableName: true, timestamps: false }
 );
 
-model.sync().then(() => console.log("Syncrhonze model was successfully"))
-
 module.exports = model
