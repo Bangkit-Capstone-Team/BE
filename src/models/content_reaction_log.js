@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Content_reaction_log.init({
     id_user: DataTypes.INTEGER,
     id_content: DataTypes.INTEGER,
-    reaction: DataTypes.ENUM
+    reaction: DataTypes.TRUE
   }, {
     sequelize,
     modelName: 'Content_reaction_log',

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Content', {
+    await queryInterface.createTable('Contents', {
       id_content: {
         allowNull: false,
         autoIncrement: true,
@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       type_content: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN
       },
       title: {
         type: Sequelize.TEXT
@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       source: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
       status: {
         type: Sequelize.BOOLEAN
@@ -34,13 +34,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Content');
+    await queryInterface.dropTable('Contents');
   }
 };

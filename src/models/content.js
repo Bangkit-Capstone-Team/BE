@@ -15,15 +15,16 @@ module.exports = (sequelize, DataTypes) => {
   }
   Content.init({
     id_creator: DataTypes.INTEGER,
-    type_content: DataTypes.INTEGER,
+    type_content: DataTypes.BOOLEAN,
     title: DataTypes.TEXT,
     thumbnail: DataTypes.STRING,
     description: DataTypes.TEXT,
     source: DataTypes.TEXT,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Content',
+    timestamps: false,
   });
   return Content;
 };
