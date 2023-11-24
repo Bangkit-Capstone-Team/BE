@@ -13,18 +13,22 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Content.init({
-    id_creator: DataTypes.INTEGER,
-    type_content: DataTypes.BOOLEAN,
-    title: DataTypes.TEXT,
-    thumbnail: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    source: DataTypes.TEXT,
-    status: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Content',
-    timestamps: false,
-  });
+  Content.init(
+    {
+      id_creator: DataTypes.INTEGER,
+      type_content: DataTypes.BOOLEAN,
+      title: DataTypes.TEXT,
+      thumbnail: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      source: DataTypes.TEXT,
+      status: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'Content',
+      timestamps: false,
+      freezeTableName: true,
+    }
+  );
   return Content;
 };
