@@ -21,8 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'content_view_log',
+      modelName: 'content_view_logs',
       freezeTableName: true,
+      timestamps: false,
     }
   );
   return content_view_log;

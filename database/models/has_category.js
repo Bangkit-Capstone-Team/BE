@@ -20,8 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Has_category',
+      modelName: 'Has_categories',
       freezeTableName: true,
+      timestamps: false,
     }
   );
   return Has_category;

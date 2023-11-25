@@ -15,19 +15,24 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      name: DataTypes.STRING,
-      username: DataTypes.STRING,
+      id_user: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
+      name: DataTypes.STRING(100),
+      username: DataTypes.STRING(100),
       password: DataTypes.STRING,
       email: DataTypes.STRING,
       address: DataTypes.TEXT,
       birth_date: DataTypes.DATE,
-      phone_number: DataTypes.INTEGER,
+      phone_number: DataTypes.STRING,
       type_role: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: 'Users',
       freezeTableName: true,
+      timestamps: false,
     }
   );
   return User;
