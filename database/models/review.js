@@ -18,11 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       id_user: DataTypes.INTEGER,
       id_content: DataTypes.INTEGER,
       comment: DataTypes.TEXT,
+      createdAt: DataTypes.DATE,
     },
     {
       sequelize,
-      modelName: 'Review',
+      modelName: 'Reviews',
       freezeTableName: true,
+      timestamps: false,
     }
   );
   return Review;

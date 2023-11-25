@@ -17,12 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       id_user: DataTypes.INTEGER,
       id_content: DataTypes.INTEGER,
-      reaction: DataTypes.TRUE,
+      reaction: DataTypes.STRING,
     },
     {
       sequelize,
-      modelName: 'Content_reaction_log',
+      modelName: 'Content_reaction_logs',
       freezeTableName: true,
+      timestamps: false,
     }
   );
   return Content_reaction_log;
