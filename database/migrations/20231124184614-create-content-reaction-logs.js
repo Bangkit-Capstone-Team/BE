@@ -2,8 +2,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('content_view_logs', {
-      id_viewer: {
+    await queryInterface.createTable('Content_reaction_logs', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -15,12 +15,12 @@ module.exports = {
       id_content: {
         type: Sequelize.INTEGER
       },
-      source: {
-        type: Sequelize.STRING(10)
+      reaction: {
+        type: Sequelize.BOOLEAN
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('content_view_logs');
+    await queryInterface.dropTable('Content_reaction_logs');
   }
 };
