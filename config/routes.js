@@ -4,7 +4,7 @@ const {
   insertUser,
   updateDataUser,
   deleteUser
-} = require('../controller/User');
+} = require('../controller/user');
 
 const {
   getReviews,

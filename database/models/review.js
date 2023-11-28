@@ -13,19 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Review.init(
-    {
-      id_user: DataTypes.INTEGER,
-      id_content: DataTypes.INTEGER,
-      comment: DataTypes.TEXT,
-      createdAt: DataTypes.DATE,
-    },
-    {
-      sequelize,
-      modelName: 'Reviews',
-      freezeTableName: true,
-      timestamps: false,
-    }
-  );
+  Review.init({
+    id_user: DataTypes.INTEGER,
+    id_content: DataTypes.INTEGER,
+    comment: DataTypes.TEXT,
+    createdAt: DataTypes.DATE
+  }, {
+    sequelize,
+    modelName: 'Review',
+    timestamps: false
+  });
   return Review;
 };

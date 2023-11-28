@@ -3,19 +3,19 @@ const express = require("express")
 const app = express()
 const routes = require("./config/routes")
 const bodyParser = require("body-parser")
-const cookieParser = require('cookie-parser')
-const PORT = process.env.PORT || 8080
+const cors = require('cors');
+const PORT = process.env.APP_PORT || 5000
 
-app.use(cookieParser())
-app.use(express.json())
-// app.use(bodyParser.urlencoded({extended: false}))
-
+app.use(bodyParser.json())
+app.use(cors());
 routes(app)
 
+app.use(express.json())
+app.use(routes)
+
 app.use((req, res) => {
-    // res.statusCode = 404
-    // res.send("Not Found")
-    res.send(req.playe)
+    res.statusCode = 404
+    res.send("Not Found")
 })
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`))

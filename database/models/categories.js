@@ -13,16 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Category.init(
-    {
-      category: DataTypes.STRING,
-    },
-    {
-      sequelize,
-      modelName: 'Categories',
-      freezeTableName: true,
-      timestamps: false,
-    }
-  );
+  Category.init({
+    category: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Category',
+    timestamps: false
+  });
   return Category;
 };
