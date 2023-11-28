@@ -20,7 +20,7 @@ const {
   insertCategory,
   updateCategory,
   deleteCategory
-} = require('../controller/categories');
+} = require('../controller/category');
 
 const {
   getHasCategories,
