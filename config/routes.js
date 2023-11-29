@@ -54,6 +54,15 @@ const {
   deleteContentReactionLog
 } = require('../controller/ContentReactionLog');
 
+const {
+  getBanner,
+  getBannerById,
+  getBannerByCategory,
+  insertBanner,
+  updateBanner,
+  deleteBanner
+} = require('../controller/Banner');
+
 const { authLogin } = require('../controller/Auth')
 const { verifyUser } = require('./middleware')
 
@@ -109,6 +118,14 @@ module.exports = (app) => {
   app.post(`${base_url}/content-reaction-logs`, insertContentReactionLog);
   app.put(`${base_url}/content-reaction-logs/:id`, updateContentReactionLog);
   app.delete(`${base_url}/content-reaction-logs/:id`, deleteContentReactionLog);
+
+  //banner
+  app.get(`${base_url}/banner`, getBanner);
+  app.get(`${base_url}/banner/:id`, getBannerById);
+  app.get(`${base_url}/banner/:id?id_category`, getBannerByCategory);
+  app.post(`${base_url}/banner`, insertUser);
+  app.put(`${base_url}/banner/:id`, updateDataUser);
+  app.delete(`${base_url}/banner/:id`, deleteUser);
 
   app.post(`${base_url}/login`, authLogin)
   app.get(`${base_url}/get-access-token`, (req, res) => {
