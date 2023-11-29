@@ -24,9 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: DataTypes.DATE,
   }, {
     sequelize,
-    modelName: 'Content',
     timestamps: false,
     freezeTableName: true,
+    modelName: 'Contents',
   });
   return Content;
 };

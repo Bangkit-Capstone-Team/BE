@@ -14,12 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Banner.init({
-    id: DataTypes.INTEGER,
     filepath: DataTypes.STRING,
     id_category: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Banner',
+    timestamps: false,
+    freezeTableName: true,
+    modelName: 'Banners',
   });
   return Banner;
 };

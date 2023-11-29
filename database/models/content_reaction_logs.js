@@ -19,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     reaction: DataTypes.BOOLEAN,
   }, {
     sequelize,
-    modelName: 'Content_reaction_log',
     timestamps: false,
     freezeTableName: true,
+    modelName: 'Content_reaction_logs',
   });
   return Content_reaction_log;
 };

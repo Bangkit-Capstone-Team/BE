@@ -20,8 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'Review',
-    timestamps: false
+    timestamps: false,
+    freezeTableName: true,
+    modelName: 'Reviews',
   });
   return Review;
 };
