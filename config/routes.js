@@ -4,7 +4,7 @@ const {
   insertUser,
   updateDataUser,
   deleteUser
-} = require('../controller/user');
+} = require('../controller/User');
 
 const {
   getReviews,
@@ -12,7 +12,7 @@ const {
   insertReview,
   updateDataReview,
   deleteReview
-} = require('../controller/review');
+} = require('../controller/Review');
 
 const {
   getCategories,
@@ -20,7 +20,7 @@ const {
   insertCategory,
   updateCategory,
   deleteCategory
-} = require('../controller/category');
+} = require('../controller/Category');
 
 const {
   getHasCategories,
@@ -28,7 +28,7 @@ const {
   insertHasCategory,
   updateDataHasCategory,
   deleteHasCategory
-} = require('../controller/hasCategory');
+} = require('../controller/HasCategory');
 
 const {
   getContents,
@@ -36,7 +36,7 @@ const {
   insertContent,
   updateContent,
   deleteContent
-} = require('../controller/content');
+} = require('../controller/Content');
 
 const {
   getContentViewLogs,
@@ -44,7 +44,7 @@ const {
   insertContentViewLog,
   updateContentViewLog,
   deleteContentViewLog
-} = require('../controller/contentViewLog');
+} = require('../controller/ContentViewLog');
 
 const {
   getContentReactionLogs,
@@ -52,60 +52,66 @@ const {
   insertContentReactionLog,
   updateContentReactionLog,
   deleteContentReactionLog
-} = require('../controller/contentReactionLog');
+} = require('../controller/ContentReactionLog');
 
 const { authLogin } = require('../controller/Auth')
 const { verifyUser } = require('./middleware')
 
+const base_url = '/api/v1'
+
+
 module.exports = (app) => {
   //user
-  app.get('/users', getUsers);
-  app.get('/user/:id', getUserById);
-  app.post('/user/add', insertUser);
-  app.put('/user/update/:id', updateDataUser);
-  app.delete('/user/delete/:id', deleteUser);
+  app.get(`${base_url}/users`, getUsers);
+  app.get(`${base_url}/user/:id`, getUserById);
+  app.post(`${base_url}/user/add`, insertUser);
+  app.put(`${base_url}/user/:id`, updateDataUser);
+  app.delete(`${base_url}/user/:id`, deleteUser);
 
   //review
-  app.get('/review', getReviews);
-  app.get('/review/:id', getReviewById);
-  app.post('/review/add', insertReview);
-  app.put('/review/update/:id', updateDataReview);
-  app.delete('/review/delete/:id', deleteReview);
+  app.get(`${base_url}/review`, getReviews);
+  app.get(`${base_url}/review/:id`, getReviewById);
+  app.post(`${base_url}/review/`, insertReview);
+  app.put(`${base_url}/review/:id`, updateDataReview);
+  app.delete(`${base_url}/review/:id`, deleteReview);
 
   //categories
-  app.get('/categories', getCategories);
-  app.get('/category/:id', getCategoryById);
-  app.post('/category/add', insertCategory);
-  app.put('/category/update/:id', updateCategory);
-  app.delete('/category/delete/:id', deleteCategory);
+  app.get(`${base_url}/categories`, getCategories);
+  app.get(`${base_url}/category/:id`, getCategoryById);
+  app.post(`${base_url}/category/add`, insertCategory);
+  app.put(`${base_url}/category/:id`, updateCategory);
+  app.delete(`${base_url}/category/:id`, deleteCategory);
 
   //has_category
-  app.get('/has-categories', getHasCategories);
-  app.get('/has-category/:id', getHasCategoryById);
-  app.post('/has-category/add', insertHasCategory);
-  app.put('/has-category/update/:id', updateDataHasCategory);
-  app.delete('/has-category/delete/:id', deleteHasCategory);
+  app.get(`${base_url}/has-categories`, getHasCategories);
+  app.get(`${base_url}/has-category/:id`, getHasCategoryById);
+  app.post(`${base_url}/has-category/add`, insertHasCategory);
+  app.put(`${base_url}/has-category/:id`, updateDataHasCategory);
+  app.delete(`${base_url}/has-category/:id`, deleteHasCategory);
 
   //content
-  app.get('/content', getContents);
-  app.get('/content/:id', getContentById);
-  app.post('/content/add', insertContent);
-  app.put('/content/update/:id', updateContent);
-  app.delete('/content/delete/:id', deleteContent);
+  app.get(`${base_url}/contents`, getContents);
+  app.get(`${base_url}/content/:id`, getContentById);
+  app.post(`${base_url}/content/add`, insertContent);
+  app.put(`${base_url}/content/:id`, updateContent);
+  app.delete(`${base_url}/content/:id`, deleteContent);
 
   //content_view_logs
-  app.get('/content-view-logs', getContentViewLogs);
-  app.get('/content-view-log/:id', getContentViewLogById);
-  app.post('/content-view-log/add', insertContentViewLog);
-  app.put('/content-view-log/update/:id', updateContentViewLog);
-  app.delete('/content-view-log/delete/:id', deleteContentViewLog);
+  app.get(`${base_url}/content-view-logs`, getContentViewLogs);
+  app.get(`${base_url}/content-view-log/:id`, getContentViewLogById);
+  app.post(`${base_url}/content-view-log/add`, insertContentViewLog);
+  app.put(`${base_url}/content-view-log/:id`, updateContentViewLog);
+  app.delete(`${base_url}/content-view-log/:id`, deleteContentViewLog);
 
   //content_reaction_logs
-  app.get('/content-reaction-logs', getContentReactionLogs);
-  app.get('/content-reaction-log/:id', getContentReactionLogById);
-  app.post('/content-reaction-log/add', insertContentReactionLog);
-  app.put('/content-reaction-log/update/:id', updateContentReactionLog);
-  app.delete('/content-reaction-log/delete/:id', deleteContentReactionLog);
+  app.get(`${base_url}/content-reaction-logs`, getContentReactionLogs);
+  app.get(`${base_url}/content-reaction-log/:id`, getContentReactionLogById);
+  app.post(`${base_url}/content-reaction-log/add`, insertContentReactionLog);
+  app.put(`${base_url}/content-reaction-log/:id`, updateContentReactionLog);
+  app.delete(`${base_url}/content-reaction-log/:id`, deleteContentReactionLog);
 
-  app.post('/login', authLogin)
+  app.post(`${base_url}/login`, authLogin)
+  app.get(`${base_url}/get-access-token`, (req, res) => {
+    res.send("ok")
+  })
 };
