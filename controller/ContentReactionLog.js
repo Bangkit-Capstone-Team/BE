@@ -1,4 +1,4 @@
-const  { Content_reaction_log }  = require('../src/models');
+const  { Content_reaction_log }  = require('../database/models');
 
 //Content_reaction_logs
 const getContentReactionLogs = (req, res) => {

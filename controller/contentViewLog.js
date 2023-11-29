@@ -1,4 +1,4 @@
-const { Content_view_log } = require('../src/models')
+const { Content_view_log } = require('../database/models')
 
     //Content_views_logs
     const getContentViewLogs = (req, res) => {

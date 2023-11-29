@@ -1,4 +1,4 @@
-const  { Category }  = require('../src/models');
+const  { Category }  = require('../database/models');
   
   //categories
   const getCategories = (req, res) => {
