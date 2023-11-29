@@ -26,7 +26,6 @@ const getContentById = (req, res) => {
     })
 };
 
-// PERBAIKI
 const insertContent = (req, res) => {
   Contents
     .create(req.body)
@@ -38,9 +37,6 @@ const insertContent = (req, res) => {
 
 };
 
-// PERBAIKI
-
-// PERBAIKI
 const updateContent = (req, res) => {
   Contents
     .update(req.body, { where: { id: req.params.id } })
