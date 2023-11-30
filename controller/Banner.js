@@ -1,5 +1,4 @@
 const { Banner } = require('../database/models')
-const { Op } = require('sequelize');
 
 const getBanner = (req, res) => {
   Banner
