@@ -1,6 +1,6 @@
 'use strict';
 
-const bcrypt = require('bcrypt')
+const {encrypt} = require('../../helper/bcrypt')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = module.exports = {
@@ -9,7 +9,7 @@ module.exports = module.exports = {
       {
         name: 'ilham',
         username: 'ilham123',
-        password: bcrypt.hashSync('testcapstone', bcrypt.genSaltSync(10)),
+        password: encrypt('testcapstone'),
         email: 'ilham354@gmail.com',
         address: 'medan',
         birth_date: '2002-08-05',
@@ -19,7 +19,7 @@ module.exports = module.exports = {
       {
         name: 'windi',
         username: 'windi89',
-        password: bcrypt.hashSync('admin', bcrypt.genSaltSync(10)),
+        password: encrypt('admin'),
         email: 'windi@gmail.com',
         address: 'selong',
         birth_date: '2002-08-05',
@@ -29,7 +29,7 @@ module.exports = module.exports = {
       {
         name: 'jhon',
         username: 'jhon',
-        password: bcrypt.hashSync('jhon', bcrypt.genSaltSync(10)),
+        password: encrypt('jhon'),
         email: 'jhon@gmail.com',
         address: 'selong',
         birth_date: '2002-08-05',
@@ -39,7 +39,7 @@ module.exports = module.exports = {
       {
         name: 'jhon2',
         username: 'jhon2',
-        password: bcrypt.hashSync('jhon2', bcrypt.genSaltSync(10)),
+        password: encrypt('jhon2'),
         email: 'jhon2@gmail.com',
         address: 'selong',
         birth_date: '2002-08-05',
