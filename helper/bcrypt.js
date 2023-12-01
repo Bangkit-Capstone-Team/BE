@@ -9,9 +9,9 @@ const encrypt = (data) => {
   });
 };
 
-const decrypt = (data, dataCompare) => {
-  bcrypt.compare(data, dataCompare, (err, result) => {
-    return result;
+const decrypt = (data, dataCompare, callback) => {
+    bcrypt.compare(data, dataCompare, (err, result) => {
+        return callback(result);
   });
 };
 
