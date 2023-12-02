@@ -1,4 +1,4 @@
-const { Banner, Content_view_log,  Content } = require('../database/models');
+const { Banners, Content_view_logs,  Contents } = require('../database/models');
 const { Op } = require('sequelize');
 const sequelize = require('sequelize');
 
@@ -11,7 +11,7 @@ const home = (req, res) => {
   // Menggunakan Promise.all untuk mengeksekusi kueri secara paralel
   Promise.all([
     //data banner
-    Banner.findAll({
+    Banners.findAll({
       where: {
         id_category: { [Op.in]: categoryIds },
       },
@@ -19,7 +19,7 @@ const home = (req, res) => {
     }),
 
     //data view log
-    Content_view_log.findAll({
+    Content_view_logs.findAll({
       where: {
         id_user: req.params.id,
       },
@@ -28,12 +28,12 @@ const home = (req, res) => {
     }),
 
     //data content terbaru
-    Content.findAll({
+    Contents.findAll({
         order: [['createdAt', 'ASC']],
       }),
 
     //data terpopuler
-    Content_view_log.findAll({
+    Content_view_logs.findAll({
         attributes: ['id_content', [sequelize.fn('COUNT', 'id_content'), 'viewCount']],
         group: ['id_content'],
         order: [[sequelize.literal('viewCount'), 'DESC']],

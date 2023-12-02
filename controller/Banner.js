@@ -1,7 +1,7 @@
-const { Banner } = require('../database/models')
+const { Banners } = require('../database/models')
 
 const getBanner = (req, res) => {
-  Banner
+  Banners
     .findAll()
     .then((datas) => res.json(datas))
     .catch(err => {
@@ -12,7 +12,7 @@ const getBanner = (req, res) => {
 };
   
 const getBannerById = (req, res) => {
-  Banner
+  Banners
     .findAll({ where: { id: req.params.id } })
     .then((data) => {
       if(data.length == 0) return res.status(404).json({msg: "id banner not found"})
@@ -29,7 +29,7 @@ const getBannerById = (req, res) => {
 const getBannerByCategory = (req, res) => {
     const categoryIds = req.params.id_category.split(',');
   
-    Banner
+    Banners
       .findAll({ 
         where: { 
           id: req.params.id,
@@ -49,7 +49,7 @@ const getBannerByCategory = (req, res) => {
 
 
 const insertBanner = (req, res) => {
-  Banner
+  Banners
     .create(req.body)
     .then(() => res.json({ status: 'ok', msg: 'Data berhasil ditambahkan' }))
     .catch((error) => {
@@ -61,7 +61,7 @@ const insertBanner = (req, res) => {
 
 
 const updateBanner = (req, res) => {
-  Banner
+  Banners
     .update(req.body, { where: { id: req.params.id } })
     .then(() => res.json({ status: 'ok', msg: 'Data berhasil diupdate' }))
     .catch((error) => {
@@ -72,7 +72,7 @@ const updateBanner = (req, res) => {
 
   
 const deleteBanner = (req, res) => {
-  Banner
+  Banners
     .destroy({ where: { id: req.params.id } })
     .then(() => res.json({ status: 'ok', msg: 'Data berhasil terhapus' }))
     .catch((error) => {
