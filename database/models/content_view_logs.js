@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   Content_view_log.init({
     id_user: DataTypes.INTEGER,
     id_content: DataTypes.INTEGER,
-    source: DataTypes.STRING
+    source: DataTypes.STRING,
+    createdAt: DataTypes.DATE
   }, {
     sequelize,
     timestamps: false,

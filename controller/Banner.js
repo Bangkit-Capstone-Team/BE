@@ -1,8 +1,7 @@
-const { Contents } = require('../database/models')
+const { Banner } = require('../database/models')
 
-//content
-const getContents = (req, res) => {
-  Contents
+const getBanner = (req, res) => {
+  Banner
     .findAll()
     .then((datas) => res.json(datas))
     .catch(err => {
@@ -12,11 +11,11 @@ const getContents = (req, res) => {
   });
 };
   
-const getContentById = (req, res) => {
-  Contents
+const getBannerById = (req, res) => {
+  Banner
     .findAll({ where: { id: req.params.id } })
     .then((data) => {
-      if(data.length == 0) return res.status(404).json({msg: "id content not found"})
+      if(data.length == 0) return res.status(404).json({msg: "id banner not found"})
       res.json(data)
     })
     .catch(err => {
@@ -26,8 +25,31 @@ const getContentById = (req, res) => {
     })
 };
 
-const insertContent = (req, res) => {
-  Contents
+
+const getBannerByCategory = (req, res) => {
+    const categoryIds = req.params.id_category.split(',');
+  
+    Banner
+      .findAll({ 
+        where: { 
+          id: req.params.id,
+          id_category: { [Op.in]: categoryIds }
+        }, 
+        limit: 5 
+      })
+      .then((data) => {
+        if(data.length === 0) return res.status(404).json({ msg: "category banner not found" });
+        res.json(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).send("Server Error");
+      });
+  };
+
+
+const insertBanner = (req, res) => {
+  Banner
     .create(req.body)
     .then(() => res.json({ status: 'ok', msg: 'Data berhasil ditambahkan' }))
     .catch((error) => {
@@ -37,8 +59,9 @@ const insertContent = (req, res) => {
 
 };
 
-const updateContent = (req, res) => {
-  Contents
+
+const updateBanner = (req, res) => {
+  Banner
     .update(req.body, { where: { id: req.params.id } })
     .then(() => res.json({ status: 'ok', msg: 'Data berhasil diupdate' }))
     .catch((error) => {
@@ -46,11 +69,10 @@ const updateContent = (req, res) => {
       res.status(500).json({ status: 'error', msg: 'Gagal menambahkan data', error: error.message });
     })
 };
-// PERBAIKI
 
   
-const deleteContent = (req, res) => {
-  Contents
+const deleteBanner = (req, res) => {
+  Banner
     .destroy({ where: { id: req.params.id } })
     .then(() => res.json({ status: 'ok', msg: 'Data berhasil terhapus' }))
     .catch((error) => {
@@ -60,9 +82,10 @@ const deleteContent = (req, res) => {
 };
 
 module.exports = {
-  getContents,
-  getContentById,
-  insertContent,
-  updateContent,
-  deleteContent
+  getBanner,
+  getBannerById,
+  getBannerByCategory,
+  insertBanner,
+  updateBanner,
+  deleteBanner
 }
