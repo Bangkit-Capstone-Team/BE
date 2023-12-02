@@ -2,11 +2,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const encrypt = (data) => {
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    bcrypt.hash(data, salt, function (err, hash) {
-      return hash;
-    });
-  });
+  const salt = bcrypt.genSaltSync(saltRounds);
+  return bcrypt.hashSync(data, salt);
 };
 
 const decrypt = (data, dataCompare, callback) => {
