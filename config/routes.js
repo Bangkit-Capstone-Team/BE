@@ -33,6 +33,7 @@ const {
 const {
   getContents,
   getContentById,
+  searchContent,
   insertContent,
   updateContent,
   deleteContent
@@ -104,6 +105,7 @@ module.exports = (app) => {
 
   //content
   app.get(`${base_url}/contents`, getContents);
+  app.get(`${base_url}/contents/search`, searchContent);
   app.get(`${base_url}/contents/:id`, getContentById);
   app.post(`${base_url}/contents`, insertContent);
   app.put(`${base_url}/contents/:id`, updateContent);

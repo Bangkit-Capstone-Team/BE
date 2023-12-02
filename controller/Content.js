@@ -1,4 +1,5 @@
-const { Contents } = require('../database/models')
+const { Contents } = require('../database/models');
+const { Op } = require('sequelize');
 
 //content
 const getContents = (req, res) => {
@@ -25,6 +26,18 @@ const getContentById = (req, res) => {
         res.send("Server Error")
     })
 };
+
+const searchContent = (req, res) => {
+  const { type = 'keyword', keyword } = req.query
+  
+  if (type == "keyword") {
+    Contents
+      .findAll({ where: {title: {[Op.like]: `%${keyword}%`}}})
+      .then(data => {
+        res.json(data);
+      })
+  }
+}
 
 const insertContent = (req, res) => {
   Contents
@@ -62,6 +75,7 @@ const deleteContent = (req, res) => {
 module.exports = {
   getContents,
   getContentById,
+  searchContent,
   insertContent,
   updateContent,
   deleteContent
