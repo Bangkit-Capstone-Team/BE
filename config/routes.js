@@ -67,6 +67,14 @@ const {
   home
 } = require('../controller/Home')
 
+const {
+  UploadImage
+} = require('../controller/ImageSearch')
+
+
+// const {
+//   Receive
+// } = require('../MODEL_ML')
 
 const { authLogin } = require('../controller/Auth')
 const { verifyUser } = require('./middleware')
@@ -134,6 +142,10 @@ module.exports = (app) => {
 
   //home
   app.get(`${base_url}/home/:id`, home)
+
+  //image
+  app.post(`${base_url}/upload`, UploadImage)
+  // app.post(`http:/example.api.ml_model/image`, Receive)
 
   app.post(`${base_url}/login`, authLogin)
   app.get(`${base_url}/get-access-token`, (req, res) => {
