@@ -30,6 +30,9 @@ module.exports = {
       status: {
         type: Sequelize.STRING(50)
       },
+      id_product: {
+        type: Sequelize.INTEGER(11)
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
