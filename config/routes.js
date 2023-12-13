@@ -34,6 +34,7 @@ const {
   getContents,
   getContentById,
   searchContent,
+  searchContentByImage,
   insertContent,
   updateContent,
   deleteContent
@@ -67,17 +68,9 @@ const {
   home
 } = require('../controller/Home')
 
-const {
-  UploadImage
-} = require('../controller/ImageSearch')
-
-
-// const {
-//   Receive
-// } = require('../MODEL_ML')
-
 const { authLogin } = require('../controller/Auth')
 const { verifyUser } = require('./middleware')
+const {get_image, proses_image} = require('../helper/image-handler');
 
 const base_url = '/api/v1'
 
@@ -113,8 +106,9 @@ module.exports = (app) => {
 
   //content
   app.get(`${base_url}/contents`, getContents);
-  app.get(`${base_url}/contents/search`, searchContent);
   app.get(`${base_url}/contents/:id`, getContentById);
+  app.get(`${base_url}/contents/search/:keyword`, searchContent);
+  app.post(`${base_url}/contents/search`,get_image, proses_image, searchContentByImage);
   app.post(`${base_url}/contents`, insertContent);
   app.put(`${base_url}/contents/:id`, updateContent);
   app.delete(`${base_url}/contents/:id`, deleteContent);
@@ -143,12 +137,14 @@ module.exports = (app) => {
   //home
   app.get(`${base_url}/home/:id`, home)
 
-  //image
-  app.post(`${base_url}/upload`, UploadImage)
-  // app.post(`http:/example.api.ml_model/image`, Receive)
+  app.post(`${base_url}/auth/login`, authLogin)
 
-  app.post(`${base_url}/login`, authLogin)
-  app.get(`${base_url}/get-access-token`, (req, res) => {
-    res.send("ok")
+  const gen_token = require('../helper/generate-token')
+  app.post(`${base_url}/gen-access-token`, (req, res) => {
+    const { refresh_token } = req.body
+    gen_token(refresh_token, (err, acces_token) => {
+      if (err) return res.status(401).json({ status: false, msg: "Unauthorized" });
+      res.status(200).json({status: true, acces_token})
+    })
   })
 };

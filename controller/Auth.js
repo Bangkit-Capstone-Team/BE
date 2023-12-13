@@ -16,7 +16,7 @@ const authLogin = async (req, res) => {
 
                 const { id, email, type_role } = data[0];
                 const access_token = jwt.sign({ id, email, role: type_role }, process.env.ACCESS_TOKEN, { expiresIn: '600s' });
-                const refresh_token = jwt.sign({ id, email, role: type_role }, process.env.ACCESS_TOKEN, { expiresIn: '90d' });
+                const refresh_token = jwt.sign({ id, email, role: type_role }, process.env.REFRESH_TOKEN, { expiresIn: '90d' });
     
                 return res.json({ access_token, refresh_token });
             });
