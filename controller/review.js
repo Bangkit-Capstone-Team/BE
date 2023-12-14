@@ -18,11 +18,11 @@ const getReviews = (req, res) => {
   };
   
   const insertReview = (req, res) => {
-    Reviews.create(req.body).then(() => res.json({ status: 'ok', msg: 'Data berhasil ditambahkan' }));
+    Reviews.create(req.body).then(() => res.json({ status: true, msg: 'Data berhasil ditambahkan' }));
   };
   
   const updateDataReview = (req, res) => {
-      Reviews.update(req.body, { where: { id: req.params.id } }).then(() => res.json({ status: 'ok', msg: 'Data berhasil diperbarui' }));
+      Reviews.update(req.body, { where: { id: req.params.id } }).then(() => res.json({ status: true, msg: 'Data berhasil diperbarui' }));
   };
   
   const deleteReview = (req, res) => {

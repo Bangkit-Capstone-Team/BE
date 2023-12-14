@@ -1,39 +1,59 @@
-const  { Category }  = require('../database/models');
-  
-  //categories
-  const getCategories = (req, res) => {
-    Category
-      .findAll()
-      .then((datas) => res.json(datas))
-      .catch((err) => console.error(err));
-  };
-  
-  const getCategoryById = (req, res) => {
-    Category.findAll({ where: { id: req.params.id } })
-          .then((data) => res.json(data))
-          .catch(err => {
-              res.statusCode = 500
-              res.send("Server Error")
-          })
-  };
-  
-  const insertCategory = (req, res) => {
-    Category.create(req.body).then(() => res.json({ status: 'ok', msg: 'Data berhasil ditambahkan' }));
-  };
-  
-  const updateCategory = (req, res) => {
-    Category.update(req.body, { where: { id: req.params.id } }).then(() => res.json({ status: 'ok', msg: 'Data berhasil diperbarui' }));
-  };
-  
-  const deleteCategory = (req, res) => {
-    Category.destroy({ where: { id: req.params.id } }).then(() => res.json({ status: 'ok', msg: 'Data berhasil terhapus' }));
-  };
+const { Categories } = require('../database/models');
 
-  module.exports = {
+//categories
+const getCategories = (req, res) => {
+  Categories.findAll()
+    .then((datas) => res.json(datas))
+    .catch((err) => {
+      res.statusCode = 500;
+      res.send('Server Error');
+    });
+};
 
-    getCategories,
-    getCategoryById,
-    insertCategory,
-    updateCategory,
-    deleteCategory
-  }
+const getCategoryById = (req, res) => {
+  Categories.findAll({ where: { id: req.params.id } })
+    .then((data) => {
+      if (data.length == 0) return res.status(404).json({ status: false, msg: 'id tidak ditemukan' });
+      res.json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.statusCode = 500;
+      res.send('Server Error');
+    });
+};
+
+const insertCategory = (req, res) => {
+  Categories.create(req.body)
+    .then(() => res.json({ status: true, msg: 'Data berhasil ditambahkan' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('Server Error');
+    });
+};
+
+const updateCategory = (req, res) => {
+  Categories.update(req.body, { where: { id: req.params.id } })
+    .then(() => res.json({ status: true, msg: 'Data berhasil diperbarui' }))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send('server error');
+    });
+};
+
+const deleteCategory = (req, res) => {
+  Categories.destroy({ where: {id: req.params.id} })
+    .then(() => res.json({ status: true, msg: 'Data berhasil terhapus' }))
+    .catch(err => {
+      console.log(err);
+      res.status(500).send('server error');
+    })
+};
+
+module.exports = {
+  getCategories,
+  getCategoryById,
+  insertCategory,
+  updateCategory,
+  deleteCategory,
+};

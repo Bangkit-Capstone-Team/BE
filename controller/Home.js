@@ -40,19 +40,19 @@ const home = (req, res) => {
         limit: 20, // limit contents
     })
   ])
-    .then(([bannerData, watchLogData, newDocumentData, contentPopularData]) => {
-      const response = {
-        banners: bannerData,
-        watchLog: watchLogData,
-        newDocument: newDocumentData,
-        contentPopular: contentPopularData
-      };
-      res.json(response);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).send("Server Error");
-    });
+  .then(([bannerData, watchLogData, newDocumentData, contentPopularData]) => {
+    const response = {
+      banners: bannerData,
+      watchLog: watchLogData,
+      newDocument: newDocumentData,
+      contentPopular: contentPopularData
+    };
+    res.json(response);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).send("Server Error");
+  });
 };
 
 module.exports = {

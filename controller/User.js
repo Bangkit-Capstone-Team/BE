@@ -5,7 +5,7 @@ const  { Users }  = require('../database/models');
 const getUsers = (req, res) => {
   Users
     .findAll()
-    .then((datas) => res.json(datas))
+    .then((datas) => res.status(200).json(datas))
     .catch((err) => {
         console.error(err)
         res.statusCode = 500
@@ -16,10 +16,11 @@ const getUsers = (req, res) => {
 const getUserById = (req, res) => {
     Users.findAll({ where: { id: req.params.id } })
         .then((data) => {
-            if(data.length == 0) return res.status(404).json({msg: "id user not found"})
+            if(data.length == 0) return res.status(404).json({status: true, msg: "id user not found"})
             res.json(data)
         })
         .catch(err => {
+            console.log(err)
             res.statusCode = 500
             res.send("Server Error")
         })
@@ -28,7 +29,7 @@ const getUserById = (req, res) => {
 const insertUser = (req, res) => {
     Users
         .create(req.body)
-        .then(() => res.json({ status: 'ok', msg: 'Data berhasil ditambahkan' }))
+        .then(() => res.json({ status: true, msg: 'Data berhasil ditambahkan' }))
         .catch(err => {
             console.error(err)
             res.statusCode = 500
@@ -39,7 +40,7 @@ const insertUser = (req, res) => {
 const updateDataUser = (req, res) => {
     Users
         .update(req.body, { where: { id: req.params.id } })
-        .then(() => res.json({ status: 'ok', msg: 'Data berhasil diperbarui' }))
+        .then(() => res.json({ status: true, msg: 'Data berhasil diperbarui' }))
         .catch(err => {
             console.error(err)
             res.statusCode = 500
@@ -50,7 +51,7 @@ const updateDataUser = (req, res) => {
 const deleteUser = (req, res) => {
     Users
         .destroy({ where: { id: req.params.id } })
-        .then(() => res.json({ status: 'ok', msg: 'Data berhasil terhapus' }))
+        .then(() => res.json({ status: true, msg: 'Data berhasil terhapus' }))
         .catch(err => {
             console.error(err)
             res.statusCode = 500
