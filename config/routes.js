@@ -44,16 +44,12 @@ const {
   getContentViewLogs,
   getContentViewLogById,
   insertContentViewLog,
-  updateContentViewLog,
-  deleteContentViewLog
 } = require('../controller/ContentViewLog');
 
 const {
-  getContentReactionLogs,
-  getContentReactionLogById,
+  getContentReactionLogByIDContent,
   insertContentReactionLog,
   updateContentReactionLog,
-  deleteContentReactionLog
 } = require('../controller/ContentReactionLog');
 
 const {
@@ -68,9 +64,9 @@ const {
   home
 } = require('../controller/Home')
 
-const { authLogin } = require('../controller/Auth')
+const { authLogin, register } = require('../controller/Auth')
 const { verifyUser } = require('./middleware')
-const {get_image, proses_image} = require('../helper/image-handler');
+const {get_image_search, get_files_content, proses_image} = require('../helper/image-handler');
 
 const base_url = '/api/v1'
 
@@ -108,8 +104,8 @@ module.exports = (app) => {
   app.get(`${base_url}/contents`, getContents);
   app.get(`${base_url}/contents/:id`, getContentById);
   app.get(`${base_url}/contents/search/:keyword`, searchContent);
-  app.post(`${base_url}/contents/search`,get_image, proses_image, searchContentByImage);
-  app.post(`${base_url}/contents`, insertContent);
+  app.post(`${base_url}/contents/search`, get_image_search, proses_image, searchContentByImage);
+  app.post(`${base_url}/contents`,get_files_content, insertContent);
   app.put(`${base_url}/contents/:id`, updateContent);
   app.delete(`${base_url}/contents/:id`, deleteContent);
 
@@ -117,15 +113,12 @@ module.exports = (app) => {
   app.get(`${base_url}/content-view-logs`, getContentViewLogs);
   app.get(`${base_url}/content-view-logs/:id`, getContentViewLogById);
   app.post(`${base_url}/content-view-logs`, insertContentViewLog);
-  app.put(`${base_url}/content-view-logs/:id`, updateContentViewLog);
-  app.delete(`${base_url}/content-view-logs/:id`, deleteContentViewLog);
 
   //content_reaction_logs
-  app.get(`${base_url}/content-reaction-logs`, getContentReactionLogs);
-  app.get(`${base_url}/content-reaction-logs/:id`, getContentReactionLogById);
+  // app.get(`${base_url}/content-reaction-logs`, getContentReactionLogs);
+  app.get(`${base_url}/content-reaction-logs/:id_content`, getContentReactionLogByIDContent);
   app.post(`${base_url}/content-reaction-logs`, insertContentReactionLog);
-  app.put(`${base_url}/content-reaction-logs/:id`, updateContentReactionLog);
-  app.delete(`${base_url}/content-reaction-logs/:id`, deleteContentReactionLog);
+  app.put(`${base_url}/content-reaction-logs/:id_content`, updateContentReactionLog);
 
   //banner
   app.get(`${base_url}/banners`, getBanner);
@@ -138,6 +131,7 @@ module.exports = (app) => {
   app.get(`${base_url}/home/:id`, home)
 
   app.post(`${base_url}/auth/login`, authLogin)
+  app.post(`${base_url}/auth/register`, register)
 
   const gen_token = require('../helper/generate-token')
   app.post(`${base_url}/gen-access-token`, (req, res) => {
