@@ -1,0 +1,1189 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Api Docs of E-Doc APP",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": ""
+    },
+    {
+      "name": "Content",
+      "description": ""
+    },
+    {
+      "name": "Categori",
+      "description": ""
+    },
+    {
+      "name": "Home",
+      "description": ""
+    },
+    {
+      "name": "Review",
+      "description": ""
+    },
+    {
+      "name": "User",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "description": "Mengembalikan access_token dan refresh_token",
+        "requestBody": {
+          "description": "Data yang dikirimkan",
+          "content": {
+            "application/json": {
+              "example": {
+                "username": "username",
+                "passowrd": "password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "access_token": "access_token",
+                  "refresh_token": "refresh_token"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": false,
+                  "msg": "Username dan Password salah"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User Register",
+        "description": "Untuk melakukan pendaftaran",
+        "requestBody": {
+          "description": "Data yang dikirimkan",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "username": { "type": "string" },
+                    "password": { "type": "string" },
+                    "email": { "type": "string" },
+                    "address": { "type": "string" },
+                    "birth_date": { "type": "string", "format": "date-time" },
+                    "phone_number": { "type": "string" },
+                    "type_role": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Registrasi berhasil"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/reviews": {
+      "get": {
+        "tags": ["Review"],
+        "summary": "Mendapatkan semua Review",
+        "operationId": "getReviews",
+        "responses": {
+          "200": {
+            "description": "Daftar Review berhasil diperoleh",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id_user": 1,
+                    "id_content": 2,
+                    "comment": "commant",
+                    "createdAt": "2023-10-23"
+                  },
+                  {
+                    "id_user": 2,
+                    "id_content": 3,
+                    "comment": "commant",
+                    "createdAt": "2023-11-23"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Review"],
+        "summary": "Menambahkan Review baru",
+        "operationId": "insertReview",
+        "requestBody": {
+          "description": "Data yang dikirimkan",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_user": {"type": "integer"},
+                  "id_content": {"type": "integer"},
+                  "comment": {"type": "string"}
+                }
+              }
+            },
+            "application/json": {
+              "example": {
+                "id_user": "DataTypes.INTEGER",
+                "id_content": "DataTypes.INTEGER",
+                "comment": "DataTypes.String"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Review berhasil ditambahkan",
+            "content": {
+              "application/json": {
+                "example": { "status": true, "msg": "Data berhasil ditambahkan" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reviews/{id}": {
+      "get": {
+        "tags": ["Review"],
+        "summary": "Mendapatkan Review berdasarkan ID",
+        "operationId": "getReviewById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "id",
+            "description": "id review",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Review berhasil ditemukan",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id_review": 1,
+                  "id_user": 2,
+                  "id_content": 3,
+                  "comment": "commant",
+                  "createdAt": "2023-11-23"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Review"],
+        "summary": "Memperbarui Review berdasarkan ID",
+        "operationId": "updateDataReview",
+        "responses": {
+          "200": {
+            "description": "Review berhasil diperbarui",
+            "content": {
+              "application/json": {
+                "example": { "status": true, "msg": "Rewview berhasil di perbarui" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Review"],
+        "summary": "Menghapus Review berdasarkan ID",
+        "operationId": "deleteReview",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "id",
+            "description": "id review",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Review berhasil dihapus",
+            "content": {
+              "application/json": {
+                "example": { "status": true, "msg": "Review berhasil dihapus" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/categories": {
+      "get": {
+        "tags": ["Categori"],
+        "summary": "Dapatkan daftar kategori",
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "category": "Kategori 1"
+                  },
+                  {
+                    "id": 2,
+                    "category": "Kategori 2"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Categori"],
+        "summary": "Buat kategori baru",
+        "requestBody": {
+          "description": "Objek kategori yang akan dibuat",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": {"type": "string"}
+                }
+              }
+            },
+            "application/json": {
+              "example": {
+                "category": "Kategori Baru"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Kategori berhasil dibuat",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Data berhasil ditambahkan"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/categories/{id}": {
+      "get": {
+        "tags": ["Categori"],
+        "summary": "Dapatkan kategori berdasarkan ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID kategori",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "category": "Kategori 1"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Kategori tidak ditemukan",
+            "content": {
+              "example": {
+                "status": false,
+                "msg": "id tidak ditemukan"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Categori"],
+        "summary": "Perbarui kategori berdasarkan ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID kategori",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Objek kategori yang akan diperbarui",
+          "content": {
+            "application/json": {
+              "example": {
+                "category": "Kategori Terbaru"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Kategori berhasil diperbarui",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "category": "Kategori Terbaru"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Categori"],
+        "summary": "Hapus kategori berdasarkan ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID kategori",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Kategori berhasil dihapus",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Data berhasil dihapus"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      }
+    },
+    "/api/v1/contents": {
+      "get": {
+        "tags": ["Content"],
+        "summary": "Dapatkan daftar konten",
+        "description": "Mengembalikan daftar konten",
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "2",
+                    "id_creator": "id_creator",
+                    "type_content": "type_content",
+                    "title": "title",
+                    "thumbnail": "thumbnail",
+                    "description": "description",
+                    "source": "source",
+                    "status": "status",
+                    "id_product": "d_product",
+                    "createdAt": "createdAt"
+                  },
+                  {
+                    "id": "3",
+                    "id_creator": "id_creator",
+                    "type_content": "type_content",
+                    "title": "title",
+                    "thumbnail": "thumbnail",
+                    "description": "description",
+                    "source": "source",
+                    "status": "status",
+                    "id_product": "d_product",
+                    "createdAt": "createdAt"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Content"],
+        "summary": "Tambahkan konten baru",
+        "description": "Menambahkan konten baru",
+        "requestBody": {
+          "description": "Objek Content yang akan dibuat",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_creator": {"type": "integer"},
+                  "type_content": { "type": "string" },
+                  "title": { "type": "string" },
+                  "thumbnail": { "type": "string", "format": "binary" },
+                  "description": { "type": "string" },
+                  "source": { "type": "string", "format": "binary" },
+                  "status": { "type": "string" },
+                  "id_product": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Konten berhasil ditambahkan",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Data berhasil ditambahkan"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      }
+    },
+    "/api/v1/contents/{id}": {
+      "get": {
+        "tags": ["Content"],
+        "summary": "Dapatkan konten berdasarkan ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID konten",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "2",
+                    "id_creator": "id_creator",
+                    "type_content": "type_content",
+                    "title": "title",
+                    "thumbnail": "thumbnail",
+                    "description": "description",
+                    "source": "source",
+                    "status": "status",
+                    "id_product": "d_product",
+                    "createdAt": "createdAt"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Konten tidak ditemukan"
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Content"],
+        "summary": "Perbarui konten berdasarkan ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID konten",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "requestBody": {
+          "description": "Objek Content yang akan diubah",
+          "content": {
+            "application/json": {
+              "example": {
+                "id_creator": "DataTypes.INTEGER",
+                "type_content": " DataTypes.STRING",
+                "title": "DataTypes.TEXT",
+                "thumbnail": " DataTypes.STRING",
+                "description": "DataTypes.TEXT",
+                "source": " DataTypes.STRING",
+                "status": " DataTypes.STRING",
+                "id_product": "DataTypes.INTEGER",
+                "createdAt": "DataTypes.DATE"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Konten berhasil diperbarui",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Data berhasil diperbarui"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Content"],
+        "summary": "Hapus konten berdasarkan ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID konten",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Konten berhasil dihapus",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Data berhasil terhapus"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      }
+    },
+    "/api/v1/contents/search/{keyword}": {
+      "get": {
+        "tags": ["Content"],
+        "summary": "Cari konten berdasarkan kata kunci",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "path",
+            "description": "Kata kunci pencarian",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "2",
+                    "id_creator": "id_creator",
+                    "type_content": "type_content",
+                    "title": "title",
+                    "thumbnail": "thumbnail",
+                    "description": "description",
+                    "source": "source",
+                    "status": "status",
+                    "id_product": "d_product",
+                    "createdAt": "createdAt"
+                  },
+                  {
+                    "id": "2",
+                    "id_creator": "id_creator",
+                    "type_content": "type_content",
+                    "title": "title",
+                    "thumbnail": "thumbnail",
+                    "description": "description",
+                    "source": "source",
+                    "status": "status",
+                    "id_product": "d_product",
+                    "createdAt": "createdAt"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/contents/search": {
+      "post": {
+        "tags": ["Content"],
+        "summary": "Cari konten berdasarkan gambar [maintenance]",
+        "description": "Mencari konten berdasarkan gambar [maintenance]",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "requestBody": {
+          "description": "Objek gambar yang akan dicari",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {"type": "string", "format": "binary"}
+                }
+              }
+            },
+            "application/json": {
+              "example": {
+                "image": "image.png"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "examplle": [
+                  {
+                    "id": "2",
+                    "id_creator": "id_creator",
+                    "type_content": "type_content",
+                    "title": "title",
+                    "thumbnail": "thumbnail",
+                    "description": "description",
+                    "source": "source",
+                    "status": "status",
+                    "id_product": "d_product",
+                    "createdAt": "createdAt"
+                  },
+                  {
+                    "id": "2",
+                    "id_creator": "id_creator",
+                    "type_content": "type_content",
+                    "title": "title",
+                    "thumbnail": "thumbnail",
+                    "description": "description",
+                    "source": "source",
+                    "status": "status",
+                    "id_product": "d_product",
+                    "createdAt": "createdAt"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/content-view-logs": {
+      "get": {
+        "summary": "Dapatkan semua log tampilan konten",
+        "tags": ["Content"],
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id_user": "id_user",
+                    "id_content": "id_content",
+                    "source": "source",
+                    "createdAt": "createAt"
+                  },
+                  {
+                    "id_user": "id_user",
+                    "id_content": "id_content",
+                    "source": "source",
+                    "createdAt": "createAt"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      },
+      "post": {
+        "summary": "Tambah log tampilan konten baru",
+        "tags": ["Content"],
+        "requestBody": {
+          "description": "Objek log tampilan konten",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                    "id_user": { "type": "integer" },
+                    "id_content": { "type": "integer" },
+                    "source": { "type": "string" }
+                }
+              }
+            },
+            "application/json": {
+              "example": {
+                "id_user": "id_user",
+                "id_content": "id_content",
+                "source": "source"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Log tampilan konten berhasil ditambahkan",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Data berhasil ditambahkan"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      }
+    },
+    "/api/v1/content-view-logs/{id}": {
+      "get": {
+        "summary": "Dapatkan log tampilan konten berdasarkan ID",
+        "tags": ["Content"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID log tampilan konten",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id_user": "id_user",
+                    "id_content": "id_content",
+                    "source": "source",
+                    "createdAt": "createAt"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Log tampilan konten tidak ditemukan",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Data tidak ditemukan"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/content-reaction-logs": {
+      "post": {
+        "tags": ["Content"],
+        "summary": "Tambahkan reaction content",
+        "operationId": "insertContentReactionLog",
+        "requestBody": {
+          "description": "Objek reaction log yang akan ditambahkan",
+          "content": {
+            "application/json": {
+              "example": {
+                "id_user": "DataTypes.INTEGER",
+                "id_content": "DataTypes.INTEGER",
+                "reaction": "DataTypes.BOOLEAN"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Log reaksi konten berhasil ditambahkan",
+            "content": {
+              "application/json": {
+                "example": { "status": true }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/content-reaction-logs/{id_content}": {
+      "get": {
+        "tags": ["Content"],
+        "summary": "Dapatkan log reaksi konten berdasarkan ID Content",
+        "operationId": "getContentReactionLogById",
+        "parameters": [
+          {
+            "name": "id_content",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id_user": "12",
+                  "id_content": "23",
+                  "reaction": 1
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Content"],
+        "summary": "Perbarui log reaksi konten berdasarkan ID",
+        "operationId": "updateContentReactionLog",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": { "status": true }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Dapatkan data semua pengguna",
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "pengguna1",
+                    "username": "pengguna1",
+                    "password": "12312321@3232313231",
+                    "email": "pengguna1@gmail.com",
+                    "address": "alamat_penguna1",
+                    "birth_date": "2020-00-00",
+                    "phone_number": "3084234334",
+                    "type_role": "user"
+                  },
+                  {
+                    "id": 2,
+                    "name": "pengguna2",
+                    "username": "pengguna2",
+                    "password": "12312321@3232313231",
+                    "email": "pengguna2@gmail.com",
+                    "address": "alamat_penguna2",
+                    "birth_date": "2020-00-00",
+                    "phone_number": "3084234334",
+                    "type_role": "user"
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Dapatkan pengguna berdasarkan ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID user",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 2,
+                    "name": "pengguna2",
+                    "username": "pengguna2",
+                    "password": "12312321@3232313231",
+                    "email": "pengguna2@gmail.com",
+                    "address": "alamat_penguna2",
+                    "birth_date": "2020-00-00",
+                    "phone_number": "3084234334",
+                    "type_role": "user"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Pengguna tidak ditemukan",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "id user not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Perbarui data pengguna berdasarkan ID",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "DataTypes.STRING",
+                "username": "DataTypes.STRING",
+                "password": "DataTypes.STRING",
+                "email": "DataTypes.STRING",
+                "address": "DataTypes.TEXT",
+                "birth_date": "DataTypes.DATE",
+                "phone_number": "DataTypes.STRING",
+                "type_role": "DataTypes.STRING"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sukses",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": true,
+                  "msg": "Data berhasil diperbarui"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Hapus pengguna berdasarkan ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID user",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Pengguna berhasil dihapus",
+            "content": {
+              "application/json": {
+                "example": { "status": true, "msg": "Data berhasil terhapus" }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/home/{id}": {
+      "get": {
+        "tags": ["Home"],
+        "summary": "Mendapatkan data beranda berdasarkan ID User",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID user",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data beranda berhasil diambil",
+            "content": {
+              "application/json": {
+                "example": {
+                  "banners": [],
+                  "watchLog": [],
+                  "newDocument": [],
+                  "contentPopular": []
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Server"
+          }
+        }
+      }
+    }
+  }
+}
