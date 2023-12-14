@@ -4,7 +4,7 @@ const {
   insertUser,
   updateDataUser,
   deleteUser
-} = require('../controller/User');
+} = require('../controller/user');
 
 const {
   getReviews,
@@ -12,7 +12,7 @@ const {
   insertReview,
   updateDataReview,
   deleteReview
-} = require('../controller/Review');
+} = require('../controller/review');
 
 const {
   getCategories,
@@ -20,7 +20,7 @@ const {
   insertCategory,
   updateCategory,
   deleteCategory
-} = require('../controller/Category');
+} = require('../controller/category');
 
 const {
   getHasCategories,
@@ -28,7 +28,7 @@ const {
   insertHasCategory,
   updateDataHasCategory,
   deleteHasCategory
-} = require('../controller/HasCategory');
+} = require('../controller/has-category');
 
 const {
   getContents,
@@ -38,19 +38,19 @@ const {
   insertContent,
   updateContent,
   deleteContent
-} = require('../controller/Content');
+} = require('../controller/content');
 
 const {
   getContentViewLogs,
   getContentViewLogById,
   insertContentViewLog,
-} = require('../controller/ContentViewLog');
+} = require('../controller/content-view-log');
 
 const {
   getContentReactionLogByIDContent,
   insertContentReactionLog,
   updateContentReactionLog,
-} = require('../controller/ContentReactionLog');
+} = require('../controller/content-reaction-log');
 
 const {
   getBanner,
@@ -58,13 +58,13 @@ const {
   insertBanner,
   updateBanner,
   deleteBanner
-} = require('../controller/Banner');
+} = require('../controller/banner');
 
 const {
   home
-} = require('../controller/Home')
+} = require('../controller/home')
 
-const { authLogin, register } = require('../controller/Auth')
+const { authLogin, register } = require('../controller/auth')
 const { verifyUser } = require('./middleware')
 const {get_image_search, get_files_content, proses_image} = require('../helper/image-handler');
 
