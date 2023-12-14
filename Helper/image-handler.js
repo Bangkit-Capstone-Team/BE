@@ -1,5 +1,6 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs')
 const diskStorage = multer.diskStorage({
   // konfigurasi folder penyimpanan file
   destination: function (req, file, cb) {
@@ -11,8 +12,9 @@ const diskStorage = multer.diskStorage({
 });
 
 module.exports = {
-  get_image: multer({ storage: diskStorage }).single('image'),
+  get_image_search: multer({ storage: diskStorage }).single('image'),
+  get_files_content: multer({ storage: diskStorage }).fields([{ name: 'thumbnail' }, { name: 'source' }]),
   proses_image: (req, res, next) => {
-    next()
-  }
-}
+    next();
+  },
+};
