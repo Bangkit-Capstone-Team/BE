@@ -7,7 +7,9 @@ const PORT = process.env.APP_PORT || 5000
 const swaggerUI = require('swagger-ui-express')
 const apidocs = require('./apidocs.json')
 
-app.use(cors());
+app.use(cors({origin: "*"}));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 routes(app)
 
